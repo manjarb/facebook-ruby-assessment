@@ -1,8 +1,38 @@
 <html>
 	<head>
-		<title>Sinatra Framework</title>
+		<title>FB Assetbment</title>
+
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<link rel="stylesheet" href="<%= url('css/application.css') %>">
+
+		<script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 	</head>
 	<body>
-		<%= yield %>
+		<nav class="navbar navbar-default">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="/top_stories?page=1">
+						FB Assessment
+					</a>
+				</div>
+				<% if logged_in? %>
+					<div class="nav navbar-nav navbar-right">
+						<a class="navbar-brand" href="/users/1">
+							<%= current_user.username %>
+						</a>
+						<a class="navbar-brand" href="/logout">
+							Logout
+						</a>
+					</div>
+				<% end %>
+			</div>
+		</nav>
+		<div class="container">
+			<%= yield %>
+		</div>
+		
 	</body>
 </html>

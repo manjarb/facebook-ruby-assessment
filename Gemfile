@@ -20,6 +20,7 @@ gem 'pg'
 
 # Adding rake for management
 gem 'rake'
+gem "table_print"
 
 # Adding rspec for running unit testing
 gem 'rspec'

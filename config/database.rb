@@ -36,6 +36,8 @@ if Sinatra::Application.development?
 	ActiveRecord::Base.establish_connection(
 		adapter:	db.scheme == 'postgres' ? 'postgresql' : db.scheme,
 		database:	DB_NAME,
+		username:	"manjarb",
+		password:	1234,
 		encoding:	'utf8'
 	)
 else
