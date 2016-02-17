@@ -13,12 +13,13 @@
 		<br>
 		<% @posts.each do |post|%>
 			<div class="timeline-box">
-				<form method="post" action="/comments">
+				
 					<p>
 						<%= post.content %>
 						<br>
+						<br>
 						<% if post.user_id == current_user.id %>
-							<a href="update/post/" class="btn btn-sm btn-info">Update post</a>
+							<a href="update/post/<%= post.id %>" class="btn btn-sm btn-info">Update post</a>
 						<% end %>
 					</p>
 					<hr>
@@ -43,32 +44,34 @@
 						</p>
 					<% end %>
 					<br>
-					<div class="comments-box">
-						<h4>Comments</h4>
-						<br>
-						<% if comments = Comment.where(post_id: post.id) %>
-							<% comments.each do |comment| %>
-								<p><%= comment.content %></p>
-								<br>
-								<% if current_user_check?(User.find(comment.user_id)) %>
-									<a href="comment/delete/<%= comment.id %>/<%= comment.user_id %>" class="btn btn-danger btn-sm">Delete</a>
+					<form method="post" action="/comments">
+						<div class="comments-box">
+							<h4>Comments</h4>
+							<br>
+							<% if comments = Comment.where(post_id: post.id) %>
+								<% comments.each do |comment| %>
+									<p><%= comment.content %></p>
+									<br>
+									<% if current_user_check?(User.find(comment.user_id)) %>
+										<a href="comment/update/<%= comment.id %>/<%= comment.user_id %>" class="btn btn-info btn-sm">Update Comment</a>
+										<a href="comment/delete/<%= comment.id %>/<%= comment.user_id %>" class="btn btn-danger btn-sm">Delete Comment</a>
+									<% end %>
+									
+									<hr>
 								<% end %>
-								
-								<hr>
 							<% end %>
-						<% end %>
 
-						<input type="hidden" name="post_id" value="<%= post.id %>">
-						<br>
-						<textarea rows="4" class="form-control" name="comment_content"></textarea>
-						<br>
-						<input type="submit" value="Comment" class="btn btn-info">
+							<input type="hidden" name="post_id" value="<%= post.id %>">
+							<br>
+							<textarea rows="4" class="form-control" name="comment_content"></textarea>
+							<br>
+							<input type="submit" value="Comment" class="btn btn-info">
 
-						<% if current_user_check?(User.find(post.user_id)) %>
-							<a href="post/delete/<%= post.id %>/<%= post.user_id %>" class="btn btn-danger">Delete</a>
-						<% end %>
-					</div>
-				</form>
+							<% if current_user_check?(User.find(post.user_id)) %>
+								<a href="post/delete/<%= post.id %>/<%= post.user_id %>" class="btn btn-danger">Delete Post</a>
+							<% end %>
+						</div>
+					</form>
 			</div>
 		<% end %>
 	</div>

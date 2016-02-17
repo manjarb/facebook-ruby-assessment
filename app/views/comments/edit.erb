@@ -1,0 +1,8 @@
+<h1>Edit Comment</h1>
+<br>
+<form method="post" action="/update_comment">
+	<textarea rows="4" class="form-control" name="comment_content"><%= @comment.content %></textarea>
+	<input type="hidden" value="<%= @comment.id %>" name="comment_id">
+	<br>
+	<input type="submit" value="Update comment" class="btn btn-success">
+</form>

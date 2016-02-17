@@ -1,0 +1,8 @@
+<h1>Edit Post</h1>
+<br>
+<form method="post" action="/update_post">
+	<textarea rows="4" class="form-control" name="post_content"><%= @post.content %></textarea>
+	<input type="hidden" value="<%= @post.id %>" name="post_id">
+	<br>
+	<input type="submit" value="Post" class="btn btn-success">
+</form>

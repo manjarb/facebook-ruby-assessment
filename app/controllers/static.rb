@@ -97,6 +97,26 @@ get "/comment/delete/:comment_id/:user_id" do
 
 end
 
+get "/comment/update/:comment_id/:user_id" do
+	
+	if current_user_check?(User.find(params[:user_id]))
+		@comment = Comment.find_by(id: params[:comment_id])
+		
+		erb :"comments/edit"
+	else
+		redirect "/timeline"
+	end
+
+end
+
+post "/update_comment" do
+	comment = Comment.find_by(id: params[:comment_id])
+
+	comment.update(content: params[:comment_content])
+
+	redirect "/timeline"
+end
+
 get "/like/post/:post_id" do
 
 	if logged_in?
@@ -121,4 +141,34 @@ get "/unlike/post/:like_id/:user_id" do
 	end
 
 end
+
+
+get "/update/post/:post_id" do
+	@post = Post.find_by(id: params[:post_id])
+
+	erb :"posts/edit"
+end
+
+post "/update_post" do
+	post = Post.find_by(id: params[:post_id])
+
+	post.update(content: params[:post_content])
+
+	redirect "/timeline"
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
