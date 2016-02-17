@@ -10,20 +10,64 @@
 	<br>
 	<div class="timeline-container">
 		<h3>Timeline</h3>
-		<div class="timeline-box">
-			<form method="post" action="/comments">
-				<p>Content</p>
-				<hr>
-				<button class="btn btn-success">
-					Like
-				</button>
-				<br>
-				<div class="comments-box">
-					<p>Comment Content</p>
+		<br>
+		<% @posts.each do |post|%>
+			<div class="timeline-box">
+				<form method="post" action="/comments">
+					<p>
+						<%= post.content %>
+						<br>
+						<a href="btn btn-sm btn-info">Update</a>
+					</p>
+					<hr>
+					<% if like = Like.find_by(post_id: post.id,user_id: current_user.id) %>
+
+						<a href="unlike/post/<%= like.id %>/<%= current_user.id %>">Unlike</a>
+	
+					<% else %>
+						<a href="like/post/<%= post.id %>">Like</a>
+					<% end %>
 					<br>
-					
-				</div>
-			</form>
-		</div>
+					<% if likes = Like.where(post_id: post.id) %>
+						<p>
+							<strong>
+								<% likes.each do |like| %>
+									<% if user = User.find_by(id: like.user_id) %>
+										<%= user.username %>, 
+									<% end %>
+								<% end %>
+							</strong>
+							Like this
+						</p>
+					<% end %>
+					<br>
+					<div class="comments-box">
+						<h4>Comments</h4>
+						<br>
+						<% if comments = Comment.where(post_id: post.id) %>
+							<% comments.each do |comment| %>
+								<p><%= comment.content %></p>
+								<br>
+								<% if current_user_check?(User.find(comment.user_id)) %>
+									<a href="comment/delete/<%= comment.id %>/<%= comment.user_id %>" class="btn btn-danger btn-sm">Delete</a>
+								<% end %>
+								
+								<hr>
+							<% end %>
+						<% end %>
+
+						<input type="hidden" name="post_id" value="<%= post.id %>">
+						<br>
+						<textarea rows="4" class="form-control" name="comment_content"></textarea>
+						<br>
+						<input type="submit" value="Comment" class="btn btn-info">
+
+						<% if current_user_check?(User.find(post.user_id)) %>
+							<a href="post/delete/<%= post.id %>/<%= post.user_id %>" class="btn btn-danger">Delete</a>
+						<% end %>
+					</div>
+				</form>
+			</div>
+		<% end %>
 	</div>
 </div>

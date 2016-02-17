@@ -20,7 +20,7 @@
 				</div>
 				<% if logged_in? %>
 					<div class="nav navbar-nav navbar-right">
-						<a class="navbar-brand" href="/users/1">
+						<a class="navbar-brand" href="/users/<%= current_user.id %>">
 							<%= current_user.username %>
 						</a>
 						<a class="navbar-brand" href="/logout">

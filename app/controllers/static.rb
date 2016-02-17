@@ -11,7 +11,7 @@ post '/signup' do
 	user = User.new(params[:user])
 	if user.save
 		session["email"] = params[:user][:email]
-		redirect '/top_stories'
+		redirect '/timeline'
 	else
 		user.errors.full_messages
 	end
@@ -24,6 +24,8 @@ get '/timeline' do
 	if logged_in?
 		# questions = Question.where(user_id: params[:id])
 		# answers = Answer.where(user_id: params[:id])
+
+		@posts = Post.all.order(id: :desc)
 
 		erb :"users/timeline"
 	else
@@ -63,5 +65,60 @@ post "/posts" do
 
 end
 
+post "/comments" do
 
+	comment = current_user.comments.create(content: params[:comment_content],post_id: params[:post_id])
+
+	redirect "/timeline"
+
+end
+
+get "/post/delete/:post_id/:user_id" do
+	
+	if current_user_check?(User.find(params[:user_id]))
+		post = Post.find_by(id: params[:post_id])
+		post.destroy
+		redirect "/timeline"
+	else
+		redirect "/timeline"
+	end
+
+end
+
+get "/comment/delete/:comment_id/:user_id" do
+	
+	if current_user_check?(User.find(params[:user_id]))
+		comment = Comment.find_by(id: params[:comment_id])
+		comment.destroy
+		redirect "/timeline"
+	else
+		redirect "/timeline"
+	end
+
+end
+
+get "/like/post/:post_id" do
+
+	if logged_in?
+
+		like = current_user.likes.create(post_id: params[:post_id])		
+
+		redirect '/timeline'
+	else
+		redirect '/timeline'
+	end 
+
+end
+
+get "/unlike/post/:like_id/:user_id" do
+
+	if current_user_check?(User.find(params[:user_id]))
+		like = Like.find_by(id: params[:like_id])
+		like.destroy
+		redirect "/timeline"
+	else
+		redirect "/timeline"
+	end
+
+end
 

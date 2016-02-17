@@ -9,7 +9,8 @@ h1, h2, h3, h4, p {
   margin-top: 30px; }
 
 .timeline-box {
-  border: 1px solid #000;
-  padding: 15px; }
+  border: 1px solid #eee;
+  padding: 15px;
+  margin-bottom: 30px; }
 
 /*# sourceMappingURL=application.css.map */

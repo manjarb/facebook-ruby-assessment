@@ -9,4 +9,8 @@ helpers do
 	def logged_in?
 		!current_user.nil?
 	end
+
+	def current_user_check?(user)
+		user == current_user
+	end
 end
